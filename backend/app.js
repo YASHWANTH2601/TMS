@@ -17,7 +17,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors());
 
 // Middleware for authentication
 const authenticate = async (req, res, next) => {
