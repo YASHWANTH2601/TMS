@@ -9,7 +9,8 @@ const bodyParser = require("body-parser");
 const connectDb = require("./config/db");
 const User = require("./models/User");
 const Task = require("./models/Task");
-
+const crypto = require("crypto");
+const apiKey = crypto.randomBytes(16).toString("hex");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -33,7 +34,7 @@ const authenticate = async (req, res, next) => {
 
   try {
     // Verify the token
-    const decoded = jwt.verify(token, SECRET_KEY);
+    const decoded = jwt.verify(token, apiKey || SECRET_KEY);
     req.userId = decoded.id; // Attach userId to the request for further use
     next(); // Proceed to the next middleware or route handler
   } catch (error) {
